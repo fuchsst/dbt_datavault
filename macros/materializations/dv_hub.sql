@@ -37,9 +37,9 @@
     {% if (
            ('ID' in col_types) and col_types['ID']==key_type and 
            ('KEY' in col_types) and col_types['KEY']=='TEXT' and 
-           ('LOAD_TS' in col_types) and col_types['LOAD_TS'] == 'TIMESTAMP_LTZ' and 
+           ('LOAD_TS' in col_types) and (col_types['LOAD_TS'] == 'TIMESTAMP_LTZ' or col_types['LOAD_TS'] == 'TIMESTAMP_NTZ') and 
            ('SOURCE_SYSTEM' in col_types) and col_types['SOURCE_SYSTEM'] == 'TEXT' and 
-           ('LAST_SEEN_TS' in col_types) and col_types['LAST_SEEN_TS'] == 'TIMESTAMP_LTZ' and 
+           ('LAST_SEEN_TS' in col_types) and (col_types['LAST_SEEN_TS'] == 'TIMESTAMP_LTZ' or col_types['LAST_SEEN_TS'] == 'TIMESTAMP_NTZ') and 
            ('LAST_SEEN_SYSTEM' in col_types) and col_types['LAST_SEEN_SYSTEM']== 'TEXT') -%}
         {% do return(True) %}
     {% else %}

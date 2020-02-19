@@ -36,9 +36,9 @@
 
     {% if (
            ('ID' in col_types) and col_types['ID'] == key_type and 
-           ('LOAD_TS' in col_types) and col_types['LOAD_TS'] == 'TIMESTAMP_LTZ' and 
+           ('LOAD_TS' in col_types) and (col_types['LOAD_TS'] == 'TIMESTAMP_LTZ' or col_types['LOAD_TS'] == 'TIMESTAMP_NTZ') and 
            ('SOURCE_SYSTEM' in col_types) and col_types['SOURCE_SYSTEM'] == 'TEXT' and 
-           ('LAST_SEEN_TS' in col_types) and col_types['LAST_SEEN_TS'] == 'TIMESTAMP_LTZ' and 
+           ('LAST_SEEN_TS' in col_types) and (col_types['LAST_SEEN_TS'] == 'TIMESTAMP_LTZ' or col_types['LAST_SEEN_TS'] == 'TIMESTAMP_NTZ') and 
            ('LAST_SEEN_SYSTEM' in col_types) and col_types['LAST_SEEN_SYSTEM'] == 'TEXT') %}
         {% for link_field in link_fields %}
             {% if ((link_field.name.upper() not in col_types) or col_types[link_field.name.upper()] != 'NUMBER') %}
