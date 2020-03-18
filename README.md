@@ -98,7 +98,7 @@ The materialisation for a satellite takes the following config
 | parent_table           | Yes      | ref('hub_table1')                      |             | reference to the hub or link table this satellite belongs to
 | business_key           | No       | 'src_field_name1'                      |             | field name of the business key in the source model (for link tables, use a list of field names that are in the same order as the `hub_tables` list)
 | link_fields            | No       |                                        |             | list of fields that link target field name to the source field with the business key and the corresponding hub 
-| secondary_pk_field     | No       | 'src_field5'                           |             | an optional field that will become part of the unique key of the satellite (besides the parent table id)
+| secondary_keys          | No       | ['src_field5']                        |             | an optional field that will become part of the unique key of the satellite (besides the parent table id)
 | load_field_name        | No       | 'valid_from'                           | 'load_ts'   | name of the load timestamp field in the satellite
 | is_historical          | No       | false                                  | true        | if set to false, the satellite will not be historized (no unload timestamp field and existing records will be updated instead of unload timestamp set + new record)
 | tombstone_field_name   | No       | 'is_deleted'                           |             | can be any type of field (char or date). If it is not null, the existing records of this business key in the satellites will be physically deleted (opposed to adding a new historical row) and one row added with all fields null and a `load_ts` of `min(load_ts)` from the records that are deleted and a `unload_ts` with the provided `load_ts` (or current_date() if missing). This might be required when the user requests to delete all his data (as allowed by GDPR)  
@@ -114,7 +114,7 @@ For a hub satellite
       materialized = 'dv_satellite',
       parent_table = 'hub_table1',
       business_key = 'src_field_name1',
-      secondary_pk_field = 'src_field5',
+      secondary_keys = ['src_field5'],
       load_field_name = 'valid_from',
       tombstone_field_name = 'tombstone_flag'
     )
@@ -137,11 +137,11 @@ For a link satellite
                       }, 
                       {
                         'source_field_name' : 'src_field_name2' 
-                        'hub' : ref('hub_name2'),
+                        'hub' : 'hub_name2',
                         'name' : 'dest_field_name2' 
                       }
                     ],
-      secondary_pk_field = 'src_field5',
+      secondary_keys = ['src_field5'],
       load_field_name = 'valid_from',
       tombstone_field_name = 'tombstone_flag',
       is_historical = false
